@@ -37,8 +37,6 @@ struct LightSource
     vec3 specular;
 };
 
-
-
 uniform sampler2D depthMap;
 uniform mat4 viewMatrix;
 uniform vec3 camPosition;
