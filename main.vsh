@@ -7,27 +7,41 @@ layout(location = 0) in vec3 vertexPosition;
 layout(location = 1) in vec3 vertexColor;
 
 // Vertex UV coordinate
-layout(location = 2) in vec2 vertexUV;
+layout(location = 2) in vec3 vertexUV;
 
-uniform mat4 mvpMat;
+// Vertex normal coordinate
+layout(location = 3) in vec3 vertexNormal;
 
-// UV coordinate (will be passed to the fragment shader)
-out vec2 outUV;
 
 // Color (will be passed to the fragment shader)
 out vec3 outColor;
 
+// UV coordinate (will be passed to the fragment shader)
+out vec3 outUV;
+
+// Normal (will be passed to the fragment shader)
+out vec3 outNormal;
+
+// Vertex Position (will be passed to the fragment shader)
+out vec3 outPosition;
+
+// Shadow Position (will be passed to the fragment shader)
+out vec4 outPositionShadow;
+
+
+uniform mat4 projMatrix;
+uniform mat4 viewMatrix;
+uniform mat4 modelMatrix;
+uniform mat4 lightSrcMatrix;
+
 void main()
 {
-	vec4 newPosition = vec4(vertexPosition, 1.0);
-	newPosition = mvpMat * newPosition;
-	// Convert our vertex position to homogeneous coordinates by introducing the w-component.
-	// Vertex positions are ... positions, so we specify the w-coordinate as 1.0.
-	vec4 finalPosition = newPosition;
+	vec4 unmodifiedPosition = vec4(vertexPosition, 1.0f);
+    gl_Position = projMatrix * viewMatrix * modelMatrix * unmodifiedPosition;
 
-	// Give OpenGL the final position of our vertex
-	gl_Position = finalPosition;
-
-	outUV = vertexUV;
+    outPosition = vec3(modelMatrix * unmodifiedPosition);
+    outNormal = mat3(transpose(inverse(modelMatrix))) * vertexNormal;
 	outColor = vertexColor;
+    outUV = vertexUV;
+    outPositionShadow = lightSrcMatrix * vec4(outPosition, 1.0f);
 }
