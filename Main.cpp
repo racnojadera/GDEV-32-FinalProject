@@ -207,7 +207,7 @@ int main()
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)(offsetof(Vertex, u)));
 
 	// Vertex attribute 3 - Normal
-	glEnableVertexAttribArray(2);
+	glEnableVertexAttribArray(3);
 	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)(offsetof(Vertex, nx)));
 
 	glBindVertexArray(0);
@@ -223,7 +223,7 @@ int main()
 	GLuint depthShader = CreateShaderProgram("depthmain.vsh", "depthmain.fsh");
 
 	glViewport(0, 0, windowWidth, windowHeight);
-
+	
 	glEnable(GL_MULTISAMPLE);
 	glEnable(GL_DEPTH_TEST);
 
@@ -254,45 +254,6 @@ int main()
 	}
 
 
-	GLuint texrubiks;
-	glGenTextures(1, &texrubiks);
-
-	stbi_set_flip_vertically_on_load(true);
-	int imageWidth, imageHeight, numChannels;
-
-	// Read the image data and store it in an unsigned char array
-	unsigned char* imageData = stbi_load("rubiks.jpg", &imageWidth, &imageHeight, &numChannels, 0);
-
-	// Make sure that we actually loaded the image before uploading the data to the GPU
-	if (imageData != nullptr)
-	{
-		// Our texture is 2D, so we bind our texture to the GL_TEXTURE_2D target
-		glBindTexture(GL_TEXTURE_2D, texrubiks);
-
-		// Set the filtering methods for magnification and minification
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-		// Set the wrapping method for the s-axis (x-axis) and t-axis (y-axis)
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-		// Upload the image data to GPU memory
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imageWidth, imageHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
-
-		// If we set minification to use mipmaps, we can tell OpenGL to generate the mipmaps for us
-		//glGenerateMipmap(GL_TEXTURE_2D);
-
-		// Once we have copied the data over to the GPU, we can delete
-		// the data on the CPU side, since we won't be using it anymore
-		stbi_image_free(imageData);
-		imageData = nullptr;
-	}
-	else
-	{
-		std::cerr << "Failed to load image" << std::endl;
-	}
-
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -313,7 +274,7 @@ int main()
 		glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
 
 		glm::mat4 dirLightProjMatrix = glm::ortho(-20.0f, 20.0f, -10.0f, 10.0f, -20.0f, 20.0f);
-		glm::mat4 dirLightViewMatrix = glm::lookAt(glm::vec3(-0.1f, 3.0f, -0.1f), glm::vec3(0.6f, 0.0f, 0.6f),  glm::vec3(0.0f, 1.0f, 0.0f));
+		glm::mat4 dirLightViewMatrix = glm::lookAt(glm::vec3(0.7f, 3.0f, 0.7f), glm::vec3(0.0f, 0.0f, 0.0f),  glm::vec3(0.0f, 1.0f, 0.0f));
 		glm::mat4 lightSrcMatrix = dirLightProjMatrix * dirLightViewMatrix;
 		
 		GLint dirLightProjMatrixUniformLocation = glGetUniformLocation(depthShader, "dirLightProjMatrix");
@@ -329,7 +290,7 @@ int main()
 		glm::mat4 cube2 = glm::mat4(1.0f);
 		glm::mat4 cube3 = glm::mat4(1.0f);
 
-
+		
 
 		cube1 = glm::translate(cube1, glm::vec3(-2.0f, 1.5f, 3.0f));
 		cube1 = glm::rotate(cube1, glm::radians(25.0f*time), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -343,8 +304,7 @@ int main()
 		cube3 = glm::scale(cube3, glm::vec3(0.5f, 0.5f, 0.5f));
 		
 
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, texrubiks);
+
 		GLint depthModelMatrixUniformLocation = glGetUniformLocation(depthShader, "modelMatrix");
 		glUniformMatrix4fv(depthModelMatrixUniformLocation, 1, GL_FALSE, glm::value_ptr(cube1));
 		glDrawArrays(GL_TRIANGLES, 36, 36);
