@@ -85,7 +85,7 @@ void main()
 
     // --- FINAL ---
     vec3 lightAns = (ambient + ((1.0 - shadow) * (diffuse + specular)));
-    vec4 fragColor = texture(tex, outUV);
+    //vec4 fragColor = texture(tex, outUV);
 	finalColor = vec4(lightAns, 1.0f) * vec4(outColor,1.0f);
 }
                          
