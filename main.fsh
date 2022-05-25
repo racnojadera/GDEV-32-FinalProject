@@ -38,6 +38,7 @@ struct LightSource
 };
 
 uniform sampler2D depthMap;
+uniform sampler2D tex;
 uniform mat4 viewMatrix;
 uniform vec3 camPosition;
 uniform LightSource light;
@@ -83,7 +84,8 @@ void main()
     }
 
     // --- FINAL ---
-    vec3 lightAns = (ambient + ((1.0 - shadow) * (diffuse + specular))) ;
+    vec3 lightAns = (ambient + ((1.0 - shadow) * (diffuse + specular)));
+    vec4 fragColor = texture(tex, outUV);
 	finalColor = vec4(lightAns, 1.0f) * vec4(outColor,1.0f);
 }
                          

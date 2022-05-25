@@ -253,7 +253,42 @@ int main()
 		std::cout << "Error! Framebuffer not complete!" << std::endl;
 	}
 
+	GLuint texrubiks;
+	glGenTextures(1, &texrubiks);
+	
+	stbi_set_flip_vertically_on_load(true);
+	int imageWidth, imageHeight, numChannels;
+	unsigned char* imageData = stbi_load("rubiks.jpg", &imageWidth, &imageHeight, &numChannels, 0);
 
+	// Make sure that we actually loaded the image before uploading the data to the GPU
+	if (imageData != nullptr)
+	{
+		// Our texture is 2D, so we bind our texture to the GL_TEXTURE_2D target
+		glBindTexture(GL_TEXTURE_2D, texrubiks);
+
+		// Set the filtering methods for magnification and minification
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+		// Set the wrapping method for the s-axis (x-axis) and t-axis (y-axis)
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+		// Upload the image data to GPU memory
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imageWidth, imageHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
+
+		// If we set minification to use mipmaps, we can tell OpenGL to generate the mipmaps for us
+		//glGenerateMipmap(GL_TEXTURE_2D);
+
+		// Once we have copied the data over to the GPU, we can delete
+		// the data on the CPU side, since we won't be using it anymore
+		stbi_image_free(imageData);
+		imageData = nullptr;
+	}
+	else
+	{
+		std::cerr << "Failed to load image" << std::endl;
+	}
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -290,7 +325,7 @@ int main()
 		glm::mat4 cube2 = glm::mat4(1.0f);
 		glm::mat4 cube3 = glm::mat4(1.0f);
 
-		
+
 
 		cube1 = glm::translate(cube1, glm::vec3(-2.0f, 1.5f, 3.0f));
 		cube1 = glm::rotate(cube1, glm::radians(25.0f*time), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -303,7 +338,6 @@ int main()
 		cube3 = glm::translate(cube3, glm::vec3(0.0f, 1.0f, -1.0f));
 		cube3 = glm::scale(cube3, glm::vec3(0.5f, 0.5f, 0.5f));
 		
-
 
 		GLint depthModelMatrixUniformLocation = glGetUniformLocation(depthShader, "modelMatrix");
 		glUniformMatrix4fv(depthModelMatrixUniformLocation, 1, GL_FALSE, glm::value_ptr(cube1));
@@ -336,6 +370,9 @@ int main()
 		glUniformMatrix4fv(viewMatrixUniformLocation, 1, GL_FALSE, glm::value_ptr(viewMatrix));
 		glUniformMatrix4fv(projectionMatrixUniformLocation, 1, GL_FALSE, glm::value_ptr(perspectiveProjMatrix));
 		
+		//GLint texUniformLocation = glGetUniformLocation(program, "tex");
+		//glUniform1i(texUniformLocation, 0);
+		//glBindTexture(GL_TEXTURE_2D, texrubiks);
 		glUniformMatrix4fv(modelMatrixUniformLocation, 1, GL_FALSE, glm::value_ptr(cube1));
 		glDrawArrays(GL_TRIANGLES, 36, 36);
 		glUniformMatrix4fv(modelMatrixUniformLocation, 1, GL_FALSE, glm::value_ptr(cube2));
@@ -343,6 +380,8 @@ int main()
 		glUniformMatrix4fv(modelMatrixUniformLocation, 1, GL_FALSE, glm::value_ptr(cube3));
 		glDrawArrays(GL_TRIANGLES, 36, 36);
 
+		glBindTexture(GL_TEXTURE_2D, depthTex);
+		glUniform1i(depthTexUniformLocation, 0);
 		modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0f, 0.0f, 0.0f));
 		modelMatrix = glm::scale(modelMatrix, glm::vec3(10.0f, 10.0f, 10.0f));
 		glUniformMatrix4fv(modelMatrixUniformLocation, 1, GL_FALSE, glm::value_ptr(modelMatrix));
