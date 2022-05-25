@@ -80,7 +80,7 @@ int main()
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	
 	// --- Vertex specification ---
-	Vertex vertices[72];
+	Vertex vertices[54];
 
 	//Labels		Position					Color				UV					Normal
 	//Room
@@ -132,54 +132,34 @@ int main()
 	vertices[34] = {-0.5f, 0.0f, -0.5f, 		208, 213, 247, 		0.0f, 0.0f,			-1.0f, 1.0f, -1.0f};    // Upper-left
 	vertices[35] = {-0.5f, 0.0f, 0.5f, 			208, 213, 247, 		0.0f, 0.0f,			-1.0f, 1.0f, 1.0f};	    // Lower-left
 
-	//Rubiks Cube
+	//Pyramid
 	//Front
-	vertices[36] = { -0.5f, -0.5f, 0.5f,		255, 255, 255,		0.25f, 0.67f,		-1.0f, -1.0f, 1.0f };   // Lower-left
-	vertices[37] = { 0.5f, -0.5f, 0.5f,			255, 255, 255,		0.50f, 0.67f,		1.0f, -1.0f, 1.0f };    // Lower-right
-	vertices[38] = { 0.5f, 0.5f, 0.5f,			255, 255, 255,		0.50f, 0.33f,		1.0f, 1.0f, 1.0f };     // Upper-right
-	vertices[39] = { 0.5f, 0.5f, 0.5f,			255, 255, 255,		0.50f, 0.33f,		1.0f, 1.0f, 1.0f };     // Upper-right
-	vertices[40] = { -0.5f, 0.5f, 0.5f,			255, 255, 255,		0.25f, 0.33f,		-1.0f, 1.0f, 1.0f };    // Upper-left
-	vertices[41] = { -0.5f, -0.5f, 0.5f,		255, 255, 255,		0.25f, 0.67f,		-1.0f, -1.0f, 1.0f };   // Lower-left
+	vertices[36] = {0.0f, 1.0f, 0.0f, 			255, 255, 255, 		0.0f, 0.0f, 		-1.0f, 1.0f, -1.0f};
+	vertices[37] = {-0.5f, 0.0f, 0.5f, 			255, 255, 255, 		0.0f, 0.0f, 		-1.0f, 1.0f, 1.0f};
+	vertices[38] = {0.5f, 0.0f, 0.5f, 			255, 255, 255, 		1.0f, 0.0f, 		1.0f, 1.0f, 1.0f};
 
-	//Right
-	vertices[42] = { 0.5f, -0.5f, 0.5f,			255, 255, 255,		0.50f, 0.67f,		1.0f, -1.0f, 1.0f };    // Lower-left
-	vertices[43] = { 0.5f, -0.5f, -0.5f,		255, 255, 255,		0.75f, 0.67f,		1.0f, -1.0f, -1.0f };   // Lower-right
-	vertices[44] = { 0.5f, 0.5f, -0.5f,			255, 255, 255,		0.75f, 0.33f,		1.0f, 1.0f, -1.0f };    // Upper-right
-	vertices[45] = { 0.5f, 0.5f, -0.5f,			255, 255, 255,		0.75f, 0.33f,		1.0f, 1.0f, -1.0f };    // Upper-right
-	vertices[46] = { 0.5f, 0.5f, 0.5f,			255, 255, 255,		0.50f, 0.33f,		1.0f, 1.0f, 1.0f };		// Upper-left
-	vertices[47] = { 0.5f, -0.5f, 0.5f,			255, 255, 255,		0.50f, 0.67f,		1.0f, -1.0f, 1.0f };	// Lower-left
+	// Right
+	vertices[39] = {0.0f, 1.0f, 0.0f, 			255, 255, 255,		0.0f, 0.0f, 		-1.0f, 1.0f, -1.0f};
+	vertices[40] = {0.5f, 0.0f, 0.5f, 			255, 255, 255, 		0.0f, 0.0f, 		1.0f, 1.0f, 1.0f};
+	vertices[41] = {0.5f, 0.0f, -0.5f, 			255, 255, 255, 		1.0f, 0.0f, 		1.0f, 1.0f, -1.0f};
 
-	//Back
-	vertices[48] = { -0.5f, -0.5f, -0.5f,		255, 255, 255,		0.75f, 0.67f,		-1.0f, -1.0f, -1.0f };  // Lower-left
-	vertices[49] = { 0.5f, -0.5f, -0.5f,		255, 255, 255,		1.0f, 0.67f,		1.0f, -1.0f, -1.0f };	// Lower-right
-	vertices[50] = { 0.5f, 0.5f, -0.5f,			255, 255, 255,		1.0f, 0.33f,		1.0f, 1.0f, -1.0f };    // Upper-right
-	vertices[51] = { 0.5f, 0.5f, -0.5f,			255, 255, 255,		1.0f, 0.33f,		1.0f, 1.0f, -1.0f };	// Upper-right
-	vertices[52] = { -0.5f, 0.5f, -0.5f,		255, 255, 255,		0.75f, 0.33f,		-1.0f, 1.0f, -1.0f };   // Upper-left
-	vertices[53] = { -0.5f, -0.5f, -0.5f,		255, 255, 255,		0.75f, 0.67f,		-1.0f, -1.0f, -1.0f };  // Lower-left
+	// Back
+	vertices[42] = {0.0f, 1.0f, 0.0f, 			255, 255, 255, 		0.0f, 0.0f, 		-1.0f, 1.0f, -1.0f};
+	vertices[43] = {0.5f, 0.0f, -0.5f,			255, 255, 255, 		0.0f, 0.0f, 		1.0f, 1.0f, -1.0f};
+	vertices[44] = {-0.5f, 0.0f, -0.5f, 		255, 255, 255, 		1.0f, 0.0f, 		1.0f, 1.0f, -1.0f};
 
-	//Left
-	vertices[54] = { -0.5f, -0.5f, -0.5f,		255, 255, 255,		0.0f, 0.67f,		-1.0f, -1.0f, -1.0f };  // Lower-left
-	vertices[55] = { -0.5f, -0.5f, 0.5f,		255, 255, 255,		0.25f, 0.67f,		-1.0f, -1.0f, 1.0f };	// Lower-right
-	vertices[56] = { -0.5f, 0.5f, 0.5f,			255, 255, 255,		0.25f, 0.33f,		-1.0f, 1.0f, 1.0f };    // Upper-right
-	vertices[57] = { -0.5f, 0.5f, 0.5f,			255, 255, 255,		0.25f, 0.33f,		-1.0f, 1.0f, 1.0f };	// Upper-right
-	vertices[58] = { -0.5f, 0.5f, -0.5f,		255, 255, 255,		0.0f, 0.33f,		-1.0f, 1.0f, -1.0f };   // Upper-left
-	vertices[59] = { -0.5f, -0.5f, -0.5f,		255, 255, 255,		0.0f, 0.67f,		-1.0f, -1.0f, -1.0f };  // Lower-left
+	// Left
+	vertices[45] = {0.0f, 1.0f, 0.0f, 			255, 255, 255, 		0.0f, 0.0f, 		-1.0f, 1.0f, -1.0f};
+	vertices[46] = {-0.5f, 0.0f, -0.5f, 		255, 255, 255, 		0.0f, 0.0f, 		-1.0f, 1.0f, -1.0f};
+	vertices[47] = {-0.5f, 0.0f, 0.5f, 			255, 255, 255, 		1.0f, 0.0f, 		-1.0f, 1.0f, 1.0f};
 
-	//Up
-	vertices[60] = { -0.5f, 0.5f, 0.5f,			255, 255, 255,		0.25f, 0.33f,		-1.0f, 1.0f, 1.0f };    // Upper-left
-	vertices[61] = { 0.5f, 0.5f, 0.5f,			255, 255, 255,		0.50f, 0.33f,		1.0f, 1.0f, 1.0f };		// Lower-right
-	vertices[62] = { 0.5f, 0.5f, -0.5f,			255, 255, 255,		0.50f, 0.0f,		1.0f, 1.0f, -1.0f };    // Upper-right
-	vertices[63] = { 0.5f, 0.5f, -0.5f,			255, 255, 255,		0.50f, 0.0f,		1.0f, 1.0f, -1.0f };	// Upper-right
-	vertices[64] = { -0.5f, 0.5f, -0.5f,		255, 255, 255,		0.25f, 0.0f,		-1.0f, 1.0f, -1.0f };   // Upper-left
-	vertices[65] = { -0.5f, 0.5f, 0.5f,			255, 255, 255,		0.25f, 0.33f		-1.0f, 1.0f, 1.0f };	// Lower-left
-
-	//Bottom
-	vertices[66] = { -0.5f, -0.5f, -0.5f,		255, 255, 255,		0.25f, 1.0f,		-1.0f, -1.0f, -1.0f };  // Upper-left
-	vertices[67] = { 0.5f, -0.5f, -0.5f,		255, 255, 255,		0.50f, 1.0f,		1.0f, -1.0f, -1.0f };   // Lower-right
-	vertices[68] = { 0.5f, -0.5f, 0.5f,			255, 255, 255,		0.50f, 0.67f,		1.0f, -1.0f, 1.0f };    // Upper-right
-	vertices[69] = { 0.5f, -0.5f, 0.5f,			255, 255, 255,		0.50f, 0.67f,		1.0f, -1.0f, 1.0f };    // Upper-right
-	vertices[70] = { -0.5f, -0.5f, 0.5f,		255, 255, 255,		0.25f, 0.67f,		-1.0f, -1.0f, 1.0f };   // Upper-left
-	vertices[71] = { -0.5f, -0.5f, -0.5f,		255, 255, 255,		0.25f, 1.0f,		-1.0f, -1.0f, -1.0f };  // Lower-left
+	// Bottom
+	vertices[48] = {-0.5f, 0.0f, 0.5f, 			255, 255, 255, 		0.0f, 0.0f, 		-1.0f, -1.0f, 1.0f}; 		//Upper-left
+	vertices[49] = {0.5f, 0.0f, 0.5f, 			255, 255, 255, 		1.0f, 0.0f, 		1.0f, -1.0f, 1.0f}; 		//Lower-right
+	vertices[50] = {-0.5f, 0.0f, -0.5f, 		255, 255, 255, 		0.0f, 0.0f, 		1.0f, -1.0f, -1.0f};		//Lower-right
+	vertices[51] = {-0.5f, 0.0f, -0.5f, 		255, 255, 255, 		0.0f, 0.0f, 		1.0f, -1.0f, -1.0f}; 		//Lower-right
+	vertices[52] = {0.5f, 0.0f, -0.5f, 			255, 255, 255, 		0.0f, 0.0f, 		-1.0f, -1.0f, -1.0f}; 		//Upper-Left
+	vertices[53] = {0.5f, 0.0f, 0.5f, 			255, 255, 255, 		1.0f, 0.0f, 		-1.0f, -1.0f, 1.0f}; 		//Lower-left
 	// --- Vertex specification end ---
 
 	// --- VBO VAO --- 
@@ -309,7 +289,7 @@ int main()
 		glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
 
 		glm::mat4 dirLightProjMatrix = glm::ortho(-20.0f, 20.0f, -10.0f, 10.0f, -20.0f, 20.0f);
-		glm::mat4 dirLightViewMatrix = glm::lookAt(glm::vec3(0.7f, 3.0f, 0.7f), glm::vec3(0.0f, 0.0f, 0.0f),  glm::vec3(0.0f, 1.0f, 0.0f));
+		glm::mat4 dirLightViewMatrix = glm::lookAt(glm::vec3(0.0f, 7.0f, 0.7f), glm::vec3(0.0f, 0.0f, 0.0f),  glm::vec3(0.0f, 1.0f, 0.0f));
 		glm::mat4 lightSrcMatrix = dirLightProjMatrix * dirLightViewMatrix;
 		
 		GLint dirLightProjMatrixUniformLocation = glGetUniformLocation(depthShader, "dirLightProjMatrix");
@@ -321,31 +301,31 @@ int main()
 		glClear(GL_DEPTH_BUFFER_BIT); 
 		
 		glm::mat4 modelMatrix = glm::mat4(1.0f);
-		glm::mat4 cube1 = glm::mat4(1.0f);
-		glm::mat4 cube2 = glm::mat4(1.0f);
-		glm::mat4 cube3 = glm::mat4(1.0f);
+		glm::mat4 pyramid1 = glm::mat4(1.0f);
+		glm::mat4 pyramid2 = glm::mat4(1.0f);
+		glm::mat4 pyramid3 = glm::mat4(1.0f);
 
 
 
-		cube1 = glm::translate(cube1, glm::vec3(-2.0f, 1.5f, 3.0f));
-		cube1 = glm::rotate(cube1, glm::radians(25.0f*time), glm::vec3(0.0f, 1.0f, 0.0f));
-		cube1 = glm::scale(cube1, glm::vec3(1.5f, 1.5f, 1.5f));
+		pyramid1 = glm::translate(pyramid1, glm::vec3(-2.0f, 1.5f, 3.0f));
+		pyramid1 = glm::rotate(pyramid1, glm::radians(25.0f*time), glm::vec3(0.0f, 1.0f, 0.0f));
+		pyramid1 = glm::scale(pyramid1, glm::vec3(1.5f, 1.5f, 1.5f));
 
-		cube2 = glm::translate(cube2, glm::vec3(0.0f, 0.5f*sin(time), 0.0f));
-		cube2 = glm::translate(cube2, glm::vec3(2.0f, 1.5f, 3.0f));
-		cube2 = glm::rotate(cube2, glm::radians(25.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		pyramid2 = glm::translate(pyramid2, glm::vec3(0.0f, 0.5f*sin(time), 0.0f));
+		pyramid2 = glm::translate(pyramid2, glm::vec3(1.0f, 2.0f, 3.0f));
+		pyramid2 = glm::rotate(pyramid2, glm::radians(25.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
-		cube3 = glm::translate(cube3, glm::vec3(0.0f, 1.0f, -1.0f));
-		cube3 = glm::scale(cube3, glm::vec3(0.5f, 0.5f, 0.5f));
+		pyramid3 = glm::translate(pyramid3, glm::vec3(0.0f, 1.0f, -1.0f));
+		pyramid3 = glm::scale(pyramid3, glm::vec3(0.5f, 0.5f, 0.5f));
 		
 
 		GLint depthModelMatrixUniformLocation = glGetUniformLocation(depthShader, "modelMatrix");
-		glUniformMatrix4fv(depthModelMatrixUniformLocation, 1, GL_FALSE, glm::value_ptr(cube1));
-		glDrawArrays(GL_TRIANGLES, 36, 36);
-		glUniformMatrix4fv(depthModelMatrixUniformLocation, 1, GL_FALSE, glm::value_ptr(cube2));
-		glDrawArrays(GL_TRIANGLES, 36, 36);
-		glUniformMatrix4fv(depthModelMatrixUniformLocation, 1, GL_FALSE, glm::value_ptr(cube3));
-		glDrawArrays(GL_TRIANGLES, 36, 36);
+		glUniformMatrix4fv(depthModelMatrixUniformLocation, 1, GL_FALSE, glm::value_ptr(pyramid1));
+		glDrawArrays(GL_TRIANGLES, 36, 18);
+		glUniformMatrix4fv(depthModelMatrixUniformLocation, 1, GL_FALSE, glm::value_ptr(pyramid2));
+		glDrawArrays(GL_TRIANGLES, 36, 18);
+		glUniformMatrix4fv(depthModelMatrixUniformLocation, 1, GL_FALSE, glm::value_ptr(pyramid3));
+		glDrawArrays(GL_TRIANGLES, 36, 18);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0); 
 		
 
@@ -373,12 +353,12 @@ int main()
 		//GLint texUniformLocation = glGetUniformLocation(program, "tex");
 		//glUniform1i(texUniformLocation, 0);
 		//glBindTexture(GL_TEXTURE_2D, texrubiks);
-		glUniformMatrix4fv(modelMatrixUniformLocation, 1, GL_FALSE, glm::value_ptr(cube1));
-		glDrawArrays(GL_TRIANGLES, 36, 36);
-		glUniformMatrix4fv(modelMatrixUniformLocation, 1, GL_FALSE, glm::value_ptr(cube2));
-		glDrawArrays(GL_TRIANGLES, 36, 36);
-		glUniformMatrix4fv(modelMatrixUniformLocation, 1, GL_FALSE, glm::value_ptr(cube3));
-		glDrawArrays(GL_TRIANGLES, 36, 36);
+		glUniformMatrix4fv(modelMatrixUniformLocation, 1, GL_FALSE, glm::value_ptr(pyramid1));
+		glDrawArrays(GL_TRIANGLES, 36, 18);
+		glUniformMatrix4fv(modelMatrixUniformLocation, 1, GL_FALSE, glm::value_ptr(pyramid2));
+		glDrawArrays(GL_TRIANGLES, 36, 18);
+		glUniformMatrix4fv(modelMatrixUniformLocation, 1, GL_FALSE, glm::value_ptr(pyramid3));
+		glDrawArrays(GL_TRIANGLES, 36, 18);
 
 		glBindTexture(GL_TEXTURE_2D, depthTex);
 		glUniform1i(depthTexUniformLocation, 0);
