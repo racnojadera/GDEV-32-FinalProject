@@ -403,6 +403,7 @@ int main()
 		glm::mat4 viewMatrix = glm::lookAt(cameraPosition, cameraPosition + cameraFront, cameraUp);
 		glm::mat4 perspectiveProjMatrix = glm::perspective(glm::radians(80.0f), aspectRatio, 0.1f, 100.0f);
 
+		//rendering the shadows
 		glUseProgram(depthShader);
 		glBindVertexArray(depthVAO);
 		glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
@@ -438,6 +439,9 @@ int main()
 		}
 		glBindFramebuffer(GL_FRAMEBUFFER, 0); 
 		
+
+
+		//rendering the objects
 		glViewport(0, 0, windowWidth, windowHeight);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glUseProgram(program);
@@ -493,8 +497,10 @@ int main()
 		glUniform3fv(materialUniformSpecular, 1, glm::value_ptr(glm::vec3(0.5f, 0.5f, 0.5f)));
 		glUniform1f(materialUniformShiny, 16.0f);
 
-		//skybox
+		//rendering the skybox
+		glDepthFunc(GL_LEQUAL);
 		glUseProgram(skyboxShader);
+		
 		glm::mat4 model = glm::mat4(1.0f);
 		glm::mat4 view = glm::mat4(glm::mat3(glm::lookAt(cameraPosition, cameraPosition + cameraFront, cameraUp)));
 		glm::mat4 projection = glm::perspective(glm::radians(45.0f), aspectRatio, 0.1f, 100.0f);
@@ -518,8 +524,6 @@ int main()
 		glUniformMatrix4fv(viewMatrixUniformLocation, 1, GL_FALSE, glm::value_ptr(viewMatrix));
 		glUniformMatrix4fv(projectionMatrixUniformLocation, 1, GL_FALSE, glm::value_ptr(perspectiveProjMatrix));
 		lastFrame = time;
-
-		
 	}
 
 	// --- Cleanup ---
