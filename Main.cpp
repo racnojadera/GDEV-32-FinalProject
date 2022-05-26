@@ -43,6 +43,11 @@ bool isPyramid = true;
 float runningTime = 0.0f;
 double lastFrame = 0;
 
+bool shiftPressed = false;
+float dayNightCycle = 0.0f;
+float cycleLength = 5.0f;
+float dayNightCycleLastModified = 0.0f;
+
 float xAxis = 0.0f;
 float yAxis = 0.0f;
 
@@ -508,6 +513,12 @@ int main()
 		glUniformMatrix4fv(glGetUniformLocation(skyboxShader, "model"), 1, GL_FALSE, glm::value_ptr(model));
 		glUniformMatrix4fv(glGetUniformLocation(skyboxShader, "view"), 1, GL_FALSE, glm::value_ptr(view));
 		glUniformMatrix4fv(glGetUniformLocation(skyboxShader, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+		
+		GLint skyboxDayNightUniform = glGetUniformLocation(skyboxShader, "dayNightCycle");
+
+		//cycleLength is 1 to 10, 1 being slowest and 10 being fastest
+		float dayNight = 0.3f + abs(cos((time-dayNightCycleLastModified)*(cycleLength/5.0f))*0.7);
+		glUniform1f(skyboxDayNightUniform, dayNight);
 
 		glBindVertexArray(skyboxVAO);
 		glActiveTexture(GL_TEXTURE0);
@@ -671,6 +682,44 @@ void processKeyboardInput(GLFWwindow* window)
 		}
 		isRPressed++;
 	}
+
+	//skybox day night cycle change
+	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+	{
+		shiftPressed = true;
+	} else
+	{
+		shiftPressed = false;
+	}
+
+	if ((glfwGetKey(window, GLFW_KEY_MINUS) == GLFW_RELEASE) && (glfwGetKey(window, GLFW_KEY_EQUAL) == GLFW_RELEASE))
+	{
+		dayNightCycle = 0;
+	}
+
+	if (shiftPressed)
+	{
+		if(dayNightCycle == 0)
+		{
+			if(glfwGetKey(window, GLFW_KEY_MINUS) == GLFW_PRESS)
+			{
+				if (cycleLength > 1.0f)
+					cycleLength -= 1.0f;
+					dayNightCycleLastModified = glfwGetTime();
+				dayNightCycle++;
+			}
+			if(glfwGetKey(window, GLFW_KEY_EQUAL) == GLFW_PRESS)
+			{
+				if (cycleLength < 10.0f)
+					cycleLength += 1.0f;
+					dayNightCycleLastModified = glfwGetTime();
+				dayNightCycle++;
+			}
+		}
+		
+	}
+		
+
 }
 
 void mouse_callback(GLFWwindow* window, double xPos, double yPos)
